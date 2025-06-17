@@ -58,3 +58,17 @@ if st.button("Predict"):
 
         # Display prediction
         st.success(f"Predicted CO₂ Emission for {selected_make} {selected_model}: **{prediction:.2f} g/km**")
+
+        # ✅ NEW: Show input as table
+        st.subheader("🔍 Feature Summary Table")
+        st.dataframe(features_df)
+
+        # ✅ NEW: Metric box for emission
+        st.metric(label="🌿 Estimated CO₂ Emission", value=f"{prediction:.2f} g/km")
+
+        # ✅ NEW: Compare with average in dataset
+        avg_emission = df_clean['CO2 Emissions(g/km)'].mean()
+        delta = prediction - avg_emission
+        comparison = "higher" if delta > 0 else "lower"
+        st.info(f"This is {abs(delta):.2f} g/km {comparison} than the average CO₂ emission of {avg_emission:.2f} g/km.")
+
